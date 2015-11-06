@@ -7,7 +7,6 @@ scalaVersion := "2.11.7"
 scalacOptions += "-target:jvm-1.8"
 
 resolvers += "jw3 at bintray" at "https://dl.bintray.com/jw3/maven"
-credentials += Credentials(Path.userHome / ".bintray" / ".credentials")
 
 libraryDependencies ++= {
     val akkaVersion = "2.4.0"
@@ -15,11 +14,9 @@ libraryDependencies ++= {
 
     Seq(
         "wiii" %% "awebapi" % "0.2",
+        "wiii" %% "akka-injects" % "0.1-SNAPSHOT",
         "gpio4s" %% "gpio4s" % "0.2-SNAPSHOT",
         "gpio4s" %% "gpio4s-pi4j" % "0.2-SNAPSHOT",
-
-        "org.scala-lang" % "scala-reflect" % "2.11.7",
-
         "gpio4s" %% "gpiocfg" % "0.1",
 
         "io.spray" %% "spray-json" % "1.3.2",
