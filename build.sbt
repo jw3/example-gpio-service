@@ -1,3 +1,5 @@
+enablePlugins(DockerPlugin)
+
 organization := "com.github.jw3.examples"
 name := "gpio-microservice"
 version := "0.1-SNAPSHOT"
@@ -36,3 +38,30 @@ libraryDependencies ++= {
         "com.typesafe.akka" %% "akka-http-testkit-experimental" % akkaStreamVersion % Test
     )
 }
+
+docker <<= (docker dependsOn assembly)
+dockerfile in docker := {
+    val artifact = assemblyOutputPath in assembly value
+    val artifactTargetPath = s"/app/${artifact.name}"
+    new sbtdocker.mutable.Dockerfile {
+        from("java:8")
+        add(artifact, artifactTargetPath)
+        copy(baseDirectory(_ / "config" / "docker.conf").value, file("app/docker.conf"))
+        copy(baseDirectory(_ / "bin" / "boot.sh").value, file("app/boot.sh"))
+        copy(artifact, artifactTargetPath)
+        expose(2222)
+        entryPoint("java", "-jar", artifactTargetPath)
+    }
+}
+
+mainClass in assembly := Option("services.GpioRestService")
+assemblyJarName in assembly := "somemicros.jar"
+test in assembly := {}
+assembleArtifact in assemblyPackageScala := true
+assemblyMergeStrategy in assembly := {
+    case m if m.toLowerCase.endsWith("manifest.mf") => MergeStrategy.discard
+    case m if m.toLowerCase.matches("meta-inf.*\\.sf$") => MergeStrategy.discard
+    case "reference.conf" => MergeStrategy.concat
+    case _ => MergeStrategy.first
+}
+
