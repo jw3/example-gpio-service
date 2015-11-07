@@ -5,6 +5,7 @@ import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.MalformedFormFieldRejection
 import akka.stream.ActorMaterializer
 import com.typesafe.config.{Config, ConfigFactory}
+import com.typesafe.scalalogging.LazyLogging
 import gpio4s._
 import net.codingwell.scalaguice.ScalaModule
 import services.api.HealthRoutes._
@@ -12,7 +13,7 @@ import services.api.InfoRoutes._
 import wiii.awa.WebHooks
 import wiii.inject._
 
-object GpioRestService extends WebHooks {
+object GpioRestService extends WebHooks with LazyLogging {
     implicit val actorSystem: ActorSystem = ActorSystem("ServiceB")
     implicit val materializer: ActorMaterializer = ActorMaterializer()
     override def config: Option[Config] = Option(ConfigFactory.parseString("webapi.port=2222"))
@@ -33,6 +34,7 @@ object GpioRestService extends WebHooks {
         }
 
     def main(args: Array[String]) {
+        logger.info("starting GpioService")
         webstart(gpioRoutes ~ webhookRoutes ~ healthRoutes ~ infoRoutes)
     }
 

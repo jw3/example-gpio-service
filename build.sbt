@@ -25,6 +25,9 @@ libraryDependencies ++= {
         "com.typesafe" % "config" % "1.3.0",
         "net.ceedubs" %% "ficus" % "1.1.2",
 
+        "com.typesafe.scala-logging" %% "scala-logging" % "3.1.0",
+        "ch.qos.logback" % "logback-classic" % "1.1.3",
+
         "com.typesafe.akka" %% "akka-actor" % akkaVersion,
         "com.typesafe.akka" %% "akka-stream-experimental" % akkaStreamVersion,
         "com.typesafe.akka" %% "akka-http-experimental" % akkaStreamVersion,
