@@ -16,7 +16,7 @@ import wiii.inject._
 object GpioRestService extends WebHooks with LazyLogging {
     implicit val actorSystem: ActorSystem = ActorSystem("ServiceB")
     implicit val materializer: ActorMaterializer = ActorMaterializer()
-    override def config: Option[Config] = Option(ConfigFactory.parseString("webapi.port=2222"))
+    override def config: Option[Config] = Option(ConfigFactory.parseString("webapi.port=2222,webapi.host=0.0.0.0"))
 
     val gpio = GpioService(GpioInfo.Pi2b, Inject[PinProducer])
 
