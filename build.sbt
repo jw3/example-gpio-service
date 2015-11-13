@@ -16,9 +16,9 @@ libraryDependencies ++= {
 
     Seq(
         "wiii" %% "awebapi" % "0.2",
-        "wiii" %% "akka-injects" % "0.1-SNAPSHOT",
-        "gpio4s" %% "gpio4s" % "0.2-SNAPSHOT",
-        "gpio4s" %% "gpio4s-pi4j" % "0.2-SNAPSHOT",
+        "wiii" %% "akka-injects" % "0.1",
+        "gpio4s" %% "gpio4s" % "0.2",
+        "gpio4s" %% "gpio4s-pi4j" % "0.1",
         "gpio4s" %% "gpiocfg" % "0.1",
 
         "io.spray" %% "spray-json" % "1.3.2",
@@ -58,7 +58,6 @@ dockerfile in docker := {
 }
 
 mainClass in assembly := Option("services.GpioRestService")
-assemblyJarName in assembly := "somemicros.jar"
 test in assembly := {}
 assembleArtifact in assemblyPackageScala := true
 assemblyMergeStrategy in assembly := {
@@ -67,4 +66,3 @@ assemblyMergeStrategy in assembly := {
     case "reference.conf" => MergeStrategy.concat
     case _ => MergeStrategy.first
 }
-
